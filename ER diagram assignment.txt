@@ -1,0 +1,78 @@
+mysql> create database FD;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> use FD;
+Database changed
+mysql> CREATE TABLE Customer (
+    ->     customer_id INT PRIMARY KEY,
+    ->     customer_name VARCHAR(50),
+    ->     customer_email VARCHAR(100),
+    ->     customer_phone VARCHAR(15),
+    ->     customer_address VARCHAR(255)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> CREATE TABLE Order_Details (
+    ->     order_id INT PRIMARY KEY,
+    ->     customer_id INT,
+    ->     food_id INT,
+    ->     order_date DATE,
+    ->     quantity INT,
+    ->     total_price DECIMAL(10, 2),
+    ->     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+    ->     FOREIGN KEY (food_id) REFERENCES Food(food_id)
+    -> );
+ERROR 1824 (HY000): Failed to open the referenced table 'food'
+mysql> CREATE TABLE Food (
+    ->     food_id INT PRIMARY KEY,
+    ->     food_name VARCHAR(50),
+    ->     category VARCHAR(50),
+    ->     price DECIMAL(10, 2),
+    ->     description TEXT
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Admin (
+    ->     admin_id INT PRIMARY KEY,
+    ->     admin_username VARCHAR(50),
+    ->     admin_password VARCHAR(50),
+    ->     admin_name VARCHAR(50),
+    ->     admin_email VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE Order_Details (
+    ->     order_id INT PRIMARY KEY,
+    ->     customer_id INT,
+    ->     food_id INT,
+    ->     order_date DATE,
+    ->     quantity INT,
+    ->     total_price DECIMAL(10, 2),
+    ->     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
+    ->     FOREIGN KEY (food_id) REFERENCES Food(food_id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Payment (
+    ->     payment_id INT PRIMARY KEY,
+    ->     order_id INT,
+    ->     payment_date DATE,
+    ->     payment_amount DECIMAL(10, 2),
+    ->     payment_status VARCHAR(20),
+    ->     FOREIGN KEY (order_id) REFERENCES Order_Details(order_id)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables
+    -> ^C
+mysql> show tables;
++---------------+
+| Tables_in_fd  |
++---------------+
+| admin         |
+| customer      |
+| food          |
+| order_details |
+| payment       |
++---------------+
+5 rows in set (0.03 sec)
